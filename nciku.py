@@ -18,8 +18,15 @@ def charid(c):
     """Given a 汉字, retrieve the character ID on nciku.com. This
     allows you to easily retrieve other information (pinyin, stroke order
     diagram, etc.)"""
-    return urlopen('http://www.nciku.com/search/all/%s' %
-            quote(c)).geturl().split('/')[-1]
+    page = urlopen('http://www.nciku.com/search/all/%s' % quote(c))
+    cid = page.geturl().split('/')[-1]
+    # If this is true, we weren't redirected. This happens when the term is
+    # ambiguous. Find the _first_ link in the page and return its cid.
+    if cid == quote(c):
+        page = page.read()
+        return re.search(b'\/detail\/%E5%A6%B9/(\d+?)"', page).group(1).decode('ascii')
+    else:
+        return cid
 
 def downloadgif(c, swfpath):
     """Given a 汉字, download its flash stroke order file."""
