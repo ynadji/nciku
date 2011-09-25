@@ -1,0 +1,3 @@
+Interface to http://www.nciku.com. I mainly wrote this to quickly retrieve
+stroke order diagrams so I wouldn't learn 汉字 from ugly computer renderings.
+I'll probably add other features.
