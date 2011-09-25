@@ -6,10 +6,15 @@
 
 import sys
 from optparse import OptionParser
-from urllib.request import urlopen
+import urllib.request
 from urllib.parse import quote
 import re
 import os
+
+# Play with the user-agent
+opener = urllib.request.build_opener()
+opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+urlopen = opener.open
 
 CHARDIR = '/usr/local/share/hanzi'
 STROKEURL = 'http://www.nciku.com/search/zh/searchorder/%s'
