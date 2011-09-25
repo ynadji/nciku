@@ -24,7 +24,8 @@ def charid(c):
     # ambiguous. Find the _first_ link in the page and return its cid.
     if cid == quote(c):
         page = page.read()
-        return re.search(b'\/detail\/%E5%A6%B9/(\d+?)"', page).group(1).decode('ascii')
+        # Search the page for the url like: /charid/char, e.g., 1310230/妹
+        return re.search(bytes('(\d+?)">%s' % c, 'utf-8'), page).group(1).decode('ascii')
     else:
         return cid
 
