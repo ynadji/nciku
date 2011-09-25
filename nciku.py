@@ -15,14 +15,14 @@ CHARDIR = '/usr/local/share/hanzi'
 STROKEURL = 'http://www.nciku.com/search/zh/searchorder/%s'
 
 def charid(c):
-    """Given a 汉字 character, retrieve the character ID on nciku.com. This
+    """Given a 汉字, retrieve the character ID on nciku.com. This
     allows you to easily retrieve other information (pinyin, stroke order
     diagram, etc.)"""
     return urlopen('http://www.nciku.com/search/all/%s' %
             quote(c)).geturl().split('/')[-1]
 
 def downloadgif(c, swfpath):
-    """Given a 汉字 character, download its flash stroke order file."""
+    """Given a 汉字, download its flash stroke order file."""
     cid = charid(c)
     page = urlopen(STROKEURL % cid).read()
     swfurl = re.search(b'http:\/\/.*?\.swf', page).group(0)
