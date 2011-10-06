@@ -62,7 +62,6 @@ def main():
 
     # do stuff
     for c in args[0].decode('utf8'):
-        print(c)
         swfpath = os.path.join(CHARDIR, u'%s.swf' % c)
         # Download if we don't already have it
         if not os.path.isfile(swfpath):
