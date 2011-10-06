@@ -34,11 +34,15 @@ def charid(c):
     else:
         return cid
 
-def downloadgif(c, swfpath):
-    """Given a 汉字, download its flash stroke order file."""
+def strokeurl(c):
     cid = charid(c)
     page = urlopen(STROKEURL % cid).read()
     swfurl = re.search(b'http:\/\/.*?\.swf', page).group(0)
+    return swfurl
+
+def downloadstrokes(c, swfpath):
+    """Given a 汉字, download its flash stroke order file."""
+    swfurl = strokeurl(c)
     swf = urlopen(swfurl.decode('ascii')).read()
     with open(swfpath, 'wb') as out:
         out.write(swf)
@@ -59,7 +63,7 @@ def main():
         swfpath = os.path.join(CHARDIR, '%s.swf' % c)
         # Download if we don't already have it
         if not os.path.isfile(swfpath):
-            downloadgif(c, swfpath)
+            downloadstrokes(c, swfpath)
 
         os.system('open %s' % swfpath)
 
