@@ -38,12 +38,12 @@ def strokeurl(c):
     cid = charid(c)
     page = urlopen(STROKEURL % cid).read()
     swfurl = re.search(b'http:\/\/.*?\.swf', page).group(0)
-    return swfurl
+    return swfurl.decode('ascii')
 
 def downloadstrokes(c, swfpath):
     """Given a 汉字, download its flash stroke order file."""
     swfurl = strokeurl(c)
-    swf = urlopen(swfurl.decode('ascii')).read()
+    swf = urlopen(swfurl).read()
     with open(swfpath, 'wb') as out:
         out.write(swf)
 
